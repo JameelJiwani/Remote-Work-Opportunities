@@ -29,10 +29,10 @@ if($_SESSION["user_code"] == 4) {
     }
 
     // Set parameters
-    $position = trim($_POST["position"]);
-    $description = trim($_POST["description"]);
-    $salary = trim($_POST["salary"]);
-    $category = trim($_POST["category"]);
+    $position = trim(get_post($conn, 'position'));
+    $description = trim(get_post($conn, 'description'));
+    $salary = trim(get_post($conn, 'salary'));
+    $category = trim(get_post($conn, 'category'));
     $userId = $_SESSION["userId"];
 
     $query  = "SELECT e.employerId FROM employers e left join users u on u.userId = e.userId where u.userId = '".$userId."'";
@@ -66,6 +66,11 @@ if($_SESSION["user_code"] == 4) {
 
     // Close connection
     $conn->close();
+  }
+  
+  function get_post($conn, $var)
+  {
+    return $conn->real_escape_string($_POST[$var]);
   }
 ?>
 <!DOCTYPE html>
